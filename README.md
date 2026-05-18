@@ -1,94 +1,152 @@
-# CSV Reorder App
+# XLSX to CSV Converter App
 
-A modern desktop application for reordering and sorting CSV files with advanced features including multi-column sorting, language-based sorting, and date parsing.
-
-## 🚀 Features
-
-- **Multi-Column Sorting**: Sort by multiple columns simultaneously
-- **Date Parsing**: Automatic detection of various date formats
-- **Language-Based Sorting**: Prioritize rows by language (EN before CN)
-- **Reverse Sorting**: Option to sort in descending order
-- **Modern UI**: Drag & drop interface with frameless window design
-- **Auto-Detection**: Automatic delimiter and encoding detection
-
-## 📋 Requirements
-
-- Windows 10/11
-- Python 3.7+ (for source installation)
-- 100MB RAM
-- 50MB free space
-
-## 🛠️ Installation
-
-### Option 1: Executable (Recommended)
-
-1. Download the latest release
-2. Extract and run `CSVReorderApp.exe`
-
-### Option 2: From Source
-
-```bash
-git clone https://github.com/vvwxvv/CSVReorderApp.git
-cd CSVReorderApp
-python -m venv appenv
-appenv\Scripts\activate
-pip install -r requirements.txt
-python main.py
-```
-
-## 🎯 How to Use
-
-1. **Launch** the application
-2. **Select CSV File** - Choose your input file
-3. **Select Output Directory** - Choose where to save
-4. **Enter Sort Columns** - Comma-separated column names (e.g., `name, age, date`)
-5. **Set Options**:
-   - ✓ Use Language Sorting (prioritize EN over CN)
-   - ✓ Reverse Sorting (descending order)
-6. **Click "Start Cooking"** to process
-
-## 📁 Supported Formats
-
-- **Delimiters**: Comma, semicolon, tab, pipe
-- **Encoding**: UTF-8 with auto-detection
-- **Date Formats**: YYYY-MM-DD, DD/MM/YYYY, YYYY, etc.
-- **Headers**: Required (first row as column names)
-
-## 🔧 Examples
-
-### Basic Sorting
+A modern desktop application for converting Excel files (.xlsx, .xls) to CSV
+format with advanced options including sheet selection, delimiter customization,
+and encoding control.
 
 ```
-Sort Columns: name, age
-Result: Sorted by name, then by age
+ ___________________________________________________________
+|                                                           |
+|          XLSX  -->  CSV  Converter  App                   |
+|___________________________________________________________|
 ```
-
-### Date + Language Sorting
-```
-Sort Columns: date, title
-Use Language Sorting: ✓
-Result: Sorted by date, then language priority, then title
-```
-
-### Reverse Sorting
-
-```
-Sort Columns: year, category
-Reverse Sorting: ✓
-Result: Descending order by year, then category
-```
-
-## 🐛 Troubleshooting
-
-- **"No header row"**: Ensure first row contains column names
-- **"Missing columns"**: Check column names match exactly (case-sensitive)
-- **"Encoding error"**: Save CSV as UTF-8 encoding
-- **"Language column missing"**: Add language column when using language sorting
-
-## 📄 License
-
-MIT License - see LICENSE file for details.
 
 ---
 
-**Made with ❤️ for efficient CSV data management** 
+## [*] Features
+
+- Multi-Sheet Support   -- Select and convert individual or all sheets
+- Delimiter Options     -- Comma, semicolon, tab, or pipe separators
+- Encoding Control      -- UTF-8 and system locale encoding support
+- Modern UI             -- Drag and drop interface with frameless window design
+- Batch Conversion      -- Convert multiple files or entire folders at once
+- Auto-Detection        -- Automatic sheet preview before conversion
+
+---
+
+## [!] Requirements
+
+- Windows 10/11
+- Python 3.10+  (for source installation)
+- 100MB RAM
+- 50MB free space
+
+---
+
+## [+] Installation
+
+### Option 1: Executable (Recommended)
+
+    1. Download the latest release
+    2. Extract the archive
+    3. Run XLSXToCSV.exe
+
+### Option 2: From Source
+
+    git clone https://github.com/vvwxvv/XLSXToCSVApp.git
+    cd XLSXToCSVApp
+    python -m venv appenv
+    appenv\Scripts\activate
+    pip install -r requirements.txt
+    python main.py
+
+---
+
+## [>] How to Use
+
+    +-----------------------------------------------+
+    | Step 1  |  Launch the application              |
+    | Step 2  |  Select your .xlsx or .xls file      |
+    | Step 3  |  Select your output directory        |
+    | Step 4  |  Choose sheet(s) to convert          |
+    | Step 5  |  Configure delimiter and encoding    |
+    | Step 6  |  Click "Start Converting"            |
+    +-----------------------------------------------+
+
+    Available Options:
+    [x] Choose delimiter  -- comma, semicolon, tab, or pipe
+    [x] Choose encoding   -- UTF-8 recommended
+    [x] Include or exclude the header row
+
+---
+
+## [~] Supported Formats
+
+    Input      : .xlsx  |  .xls
+    Output     : .csv
+    Delimiters : comma (,)  |  semicolon (;)  |  tab (\t)  |  pipe (|)
+    Encoding   : UTF-8 (default)  |  system locale fallback
+    Headers    : optional -- include or skip first row
+    Sheets     : single sheet or all sheets as separate CSV files
+
+---
+
+## [#] Examples
+
+### Single Sheet Conversion
+
+    Input  : report.xlsx   [ Sheet: "Sales" ]
+    Output : report_Sales.csv
+
+### All Sheets Conversion
+
+    Input  : workbook.xlsx   [ Sheets: "Jan", "Feb", "Mar" ]
+    Output :
+       |-- workbook_Jan.csv
+       |-- workbook_Feb.csv
+       |-- workbook_Mar.csv
+
+### Custom Delimiter
+
+    Input     : data.xlsx
+    Delimiter : Tab
+    Output    : data.csv  (tab-separated, compatible with legacy systems)
+
+---
+
+## [?] Troubleshooting
+
+    +---------------------------+--------------------------------------------------+
+    | Error                     | Fix                                              |
+    +---------------------------+--------------------------------------------------+
+    | "File not supported"      | Use .xlsx or .xls only                           |
+    | "Sheet not found"         | Refresh sheet list after selecting file          |
+    | "Encoding error"          | Switch to UTF-8 with BOM for Excel compatibility |
+    | "Empty output file"       | Confirm sheet has data and is not hidden         |
+    | "IndexError during build" | Add excludes=['scipy'] to XLSXToCSV.spec         |
+    +---------------------------+--------------------------------------------------+
+
+---
+
+## [%] Building from Source
+
+    pip install pyinstaller
+    pyinstaller XLSXToCSV.spec
+
+    NOTE: If you encounter an IndexError: tuple index out of range during
+    the build step, add excludes=['scipy'] to the Analysis() block in your
+    spec file. This is a known PyInstaller and scipy incompatibility and
+    does not affect runtime behavior.
+
+    a = Analysis(
+        ['main.py'],
+        ...
+        excludes=['scipy'],   # <-- add this line
+        ...
+    )
+
+---
+
+## [$] License
+
+MIT License -- see LICENSE file for details.
+
+---
+
+```
+  ___________________________________
+ |                                   |
+ |   Made for efficient Excel data   |
+ |          management.  (^_^)       |
+ |___________________________________|
+```
